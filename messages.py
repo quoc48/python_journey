@@ -13,6 +13,7 @@ def send_message(messages_list):
     print("\n--- All messages sent ---")
     show_messages(send_messages)  # Using first function.
 
+
 # Define two list.
 original_messages = [
     'Say hello!',
