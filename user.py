@@ -5,6 +5,7 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.user_age = user_age
+        self.login_attempts = 0
 
     def describe_user(self):
         print(f"\n--- User information ---")
@@ -15,13 +16,23 @@ class User:
     def greet_user(self):
         print(f"Wellcome {self.first_name.title()} {self.last_name.title()} to the team!")
 
+    def login_attempt(self):
+        print(f"Login attempts: {self.login_attempts}")
 
-user_1 = User('quoc', 'phan', 33)
-user_2 = User('alex', 'Toan', 24)
-user_1.describe_user()
-user_2.describe_user()
-print("\n--- Wellcome onboard ---")
-user_1.greet_user()
-user_2.greet_user()
+    def increase_login_attempt(self):
+        self.login_attempts += 1
+
+    def reset_login_attempt(self):
+        self.login_attempts = 0
+
+user = User('quoc', 'phan', 33)
+user.describe_user()
+user.login_attempt()
+user.increase_login_attempt()
+user.increase_login_attempt()
+user.increase_login_attempt()
+user.login_attempt()
+user.reset_login_attempt()
+user.login_attempt()
 
 
