@@ -40,10 +40,6 @@ class Admin(User):
         self.privileges = Privileges('can add post', 'can delete post', 'can ban user')
 
 
-
-
-
-
 user = Admin('quoc', 'phan', 33)
 user.describe_user()
 user.privileges.show_privileges()
