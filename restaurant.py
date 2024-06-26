@@ -24,14 +24,22 @@ class Restaurant:
     def increase_number_served(self, number):
         self.number_served += number
 
-my_restaurant = Restaurant('Little Cam', 'Coffee and Lunch')
+class IceCreamStand(Restaurant):
+    """A simple attempt to present from parent class."""
+    def __int__(self, name, type):
+        super().__int__(name, type)
 
+    def add_flavors(self, *flavors):
+        self.flavors = flavors
+
+    def show_flavors(self):
+        print("\n--- IceCream flavors ---")
+        for flavor in self.flavors:
+            print(f"- {flavor.title()}")
+
+my_restaurant = IceCreamStand('Ice Lovers', 'IceCreame Stand')
 my_restaurant.describe_restaurant()
-my_restaurant.set_number_served(32)
-my_restaurant.show_served()
 
-my_restaurant.increase_number_served(2)
-my_restaurant.show_served()
-
-
+my_restaurant.add_flavors('apple', 'lime', 'chocolate')
+my_restaurant.show_flavors()
 
