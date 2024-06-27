@@ -25,23 +25,5 @@ class User:
     def reset_login_attempt(self):
         self.login_attempts = 0
 
-class Privileges:
-    def __init__(self, *privileges):
-        self.privileges = privileges
-
-    def show_privileges(self):
-        print(f"\n--- The user's set of privileges ---")
-        for privilege in self.privileges:
-            print(f"- {privilege}")
-
-class Admin(User):
-    def __init__(self, first_name, last_name, user_age):
-        super().__init__(first_name, last_name, user_age)
-        self.privileges = Privileges('can add post', 'can delete post', 'can ban user')
-
-
-user = Admin('quoc', 'phan', 33)
-user.describe_user()
-user.privileges.show_privileges()
 
 
