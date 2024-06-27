@@ -37,9 +37,4 @@ class IceCreamStand(Restaurant):
         for flavor in self.flavors:
             print(f"- {flavor.title()}")
 
-my_restaurant = IceCreamStand('Ice Lovers', 'IceCreame Stand')
-my_restaurant.describe_restaurant()
-
-my_restaurant.add_flavors('apple', 'lime', 'chocolate')
-my_restaurant.show_flavors()
 
