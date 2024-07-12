@@ -48,22 +48,7 @@ class AlienInvasion:
         self.game_active = False
 
         # Make the Play button.
-        # self.play_button1 = Button(self, 'Play')
-        button_width = 200
-        button_height = 50
-        button_spacing = 50
-        total_button_width = 3 * button_width + 2 * button_spacing  # Tổng chiều rộng
-
-        # Tính tọa độ x bắt đầu để các nút được canh giữa
-        start_x = (self.settings.screen_width - total_button_width) // 2
-
-        self.easy_button = Button(self, "Easy", start_x, 300)
-        self.medium_button = Button(self, "Medium",
-                                    start_x + button_width + button_spacing,
-                                    300)
-        self.hard_button = Button(self, "Hard",
-                                  start_x + 2 * button_width + 2 * button_spacing,
-                                  300)
+        self.play_button = Button(self, 'Play')
 
 
     def run_game(self):
@@ -112,16 +97,10 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
-        button_clicked = self.easy_button.rect.collidepoint(mouse_pos)
-        if not self.game_active:
-            if self.easy_button.rect.collidepoint(mouse_pos):
-                # Reset the game settings.
-                self.settings.initialize_dynamic_settings()
-            elif self.medium_button.rect.collidepoint(mouse_pos):
-                self.settings.increase_speed()
-            elif self.hard_button.rect.collidepoint(mouse_pos):
-                self.settings.increase_speed()
-                self.settings.increase_speed()
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if not self.game_active and button_clicked:
+            # Reset the game settings.
+            self.settings.initialize_dynamic_settings()
 
             # Reset the game statistics.
             self.stats.reset_stats()
@@ -293,9 +272,7 @@ class AlienInvasion:
 
         # Draw the play button if the game is inactive
         if not self.game_active:
-            self.easy_button.draw_button()
-            self.medium_button.draw_button()
-            self.hard_button.draw_button()
+            self.play_button.draw_button()
 
         pygame.display.flip()
 
