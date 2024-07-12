@@ -41,14 +41,19 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.buttons = pygame.sprite.Group()
+        self.easy_button = Button(self)
+        self.medium_button = Button(self)
+        self.hard_button = Button(self)
 
         self._create_fleet()
 
         # Start Alien Invasion in an inactive state.
         self.game_active = False
 
-        # Make the Play button.
-        self.play_button = Button(self, 'Play')
+        # Make the Play buttons.
+        self._center_button()
+        self.buttons.add(self.easy_button, self.medium_button, self.hard_button)
 
 
     def run_game(self):
@@ -97,10 +102,15 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         """Start a new game when the player clicks Play."""
-        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
-        if not self.game_active and button_clicked:
-            # Reset the game settings.
-            self.settings.initialize_dynamic_settings()
+        if not self.game_active:
+            if self.easy_button.rect.collidepoint(mouse_pos):
+                # Reset the game settings.
+                self.settings.initialize_dynamic_settings()
+            elif self.medium_button.rect.collidepoint(mouse_pos):
+                self.settings.increase_speed()
+            elif self.hard_button.rect.collidepoint(mouse_pos):
+                self.settings.increase_speed()
+                self.settings.increase_speed()
 
             # Reset the game statistics.
             self.stats.reset_stats()
@@ -259,6 +269,19 @@ class AlienInvasion:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
+    def _center_button(self):
+        self.total_button_width = self.easy_button.rect.width + self.medium_button.rect.width + self.hard_button.rect.width
+        self.spacing = 50
+        self.total_width = self.total_button_width + 2 * self.spacing
+        self.start_x = (self.settings.screen_width - self.total_width) // 2
+
+        self.easy_button.rect.centerx = self.start_x + self.easy_button.rect.width // 2
+        self.medium_button.rect.centerx = self.start_x + self.medium_button.rect.width + self.spacing + self.medium_button.rect.width // 2
+        self.hard_button.rect.centerx = self.start_x + 2* self.hard_button.rect.width + 2 * self.hard_button.rect.width // 2
+
+        for button in self.buttons:
+            button.rect.y = self.screen_rect.centery
+
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen. """
         self.screen.fill(self.settings.bg_color)
@@ -272,7 +295,9 @@ class AlienInvasion:
 
         # Draw the play button if the game is inactive
         if not self.game_active:
-            self.play_button.draw_button()
+            self.easy_button.draw_button('Easy')
+            self.medium_button.draw_button('Medium')
+            self.hard_button.draw_button('Hard')
 
         pygame.display.flip()
 
