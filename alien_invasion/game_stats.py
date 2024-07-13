@@ -1,3 +1,6 @@
+from pathlib import Path
+import json
+
 class GameStats:
     """Track statistics for Alien Invasion."""
 
@@ -7,7 +10,7 @@ class GameStats:
         self.reset_stats()
 
         # High score should never be reset.
-        self.high_score = 0
+        self.high_score = self._load_high_score()
 
     def reset_stats(self):
         """Initialize statistics that can change during the game."""
@@ -15,3 +18,9 @@ class GameStats:
         self.score = 0
         self.level = 1
 
+    def _load_high_score(self):
+        try:
+            with open('high_score.json') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return 0

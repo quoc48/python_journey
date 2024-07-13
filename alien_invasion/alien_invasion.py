@@ -1,3 +1,5 @@
+from pathlib import Path
+import json
 import sys
 from time import sleep
 
@@ -73,6 +75,7 @@ class AlienInvasion:
         """Response to keypresses and mouse events."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self._save_high_score()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -82,11 +85,17 @@ class AlienInvasion:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
 
+    def _save_high_score(self):
+        """Save high score to a file."""
+        with open('high_score.json', 'w') as f:
+            json.dump(self.stats.high_score, f)
+
     def _start_game(self):
         """Start a new game when press 's' keyboard."""
         if not self.game_active:
             # Reset the game statistics.
-            self.stats.reset_stats()
+            high_score = int(self.path.read_text())
+            self.stats.reset_stats(high_score)
             self.game_active = True
 
             # Get rid of any remaining bullets and aliens.
@@ -137,6 +146,7 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
+            self._save_high_score()
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
