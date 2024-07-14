@@ -94,8 +94,6 @@ class AlienInvasion:
         """Start a new game when press 's' keyboard."""
         if not self.game_active:
             # Reset the game statistics.
-            high_score = int(self.path.read_text())
-            self.stats.reset_stats(high_score)
             self.game_active = True
 
             # Get rid of any remaining bullets and aliens.
@@ -191,14 +189,17 @@ class AlienInvasion:
             self.sb.check_high_score()
 
         if not self.aliens:
-            # Destroy existing bullets and create new fleet.
-            self.bullets.empty()
-            self._create_fleet()
-            self.settings.increase_speed()
+            self._start_new_level()
 
-            # Increase level.
-            self.stats.level += 1
-            self.sb.prep_level()
+    def _start_new_level(self):
+        # Destroy existing bullets and create new fleet.
+         self.bullets.empty()
+         self._create_fleet()
+         self.settings.increase_speed()
+
+         # Increase level.
+         self.stats.level += 1
+         self.sb.prep_level()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update position."""
