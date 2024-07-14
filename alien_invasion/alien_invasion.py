@@ -20,6 +20,9 @@ class AlienInvasion:
     def __init__(self):
         """Initialize the game, and create game resources."""
         pygame.init()
+        # Initialize mixer
+        pygame.mixer.init()
+
         self.clock = pygame.time.Clock()
         self.settings = Settings()
 
@@ -57,6 +60,9 @@ class AlienInvasion:
         self._center_button()
         self.buttons.add(self.easy_button, self.medium_button, self.hard_button)
 
+        # Make the sounds
+        self.bullet_sound = pygame.mixer.Sound('sounds/laser.wav')
+        self.explosion_sound = pygame.mixer.Sound('sounds/explosion.wav')
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -163,6 +169,7 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullet_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            self.bullet_sound.play(0, 500)
 
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets."""
@@ -187,6 +194,7 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
+            self.explosion_sound.play()
 
         if not self.aliens:
             self._start_new_level()
