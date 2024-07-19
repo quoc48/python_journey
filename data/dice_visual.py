@@ -2,7 +2,7 @@ import plotly.express as px
 
 from die import Die
 
-# Create a D6 dice.
+# Create two D6 dice.
 die_1 = Die()
 die_2 = Die()
 
