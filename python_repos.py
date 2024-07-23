@@ -19,7 +19,7 @@ repo_dicts = response_dict['items']
 print(f"Repositories returned: {len(repo_dicts)}")
 
 # Examine the first repository.
-repo_dict = repo_dicts[0]
+repo_dict = repo_dicts[1]
 # print(f"\nKey: {len(repo_dict)}")
 #for key in sorted(repo_dict.keys()):
    # print(key)
