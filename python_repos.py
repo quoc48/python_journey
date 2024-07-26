@@ -3,7 +3,7 @@ import plotly.express as px
 
 # Make an API call and check the response.
 url = "https://api.github.com/search/repositories"
-url += "?q=language:python+sort:stars+stars:>10000"
+url += "?q=language:c+sort:stars+stars:>10000"
 
 headers = {"Accept": "application/vnd.github.v3+json"}
 r = requests.get(url, headers=headers)
@@ -35,7 +35,7 @@ for repo_dict in repo_dicts:
     hover_texts.append(hover_text)
 
 # Make visualization.
-title = "Most-Starred Python Projects on GitHub"
+title = "Most-Starred C Projects on GitHub"
 labels = {'x': 'Repository', 'y': 'Stars'}
 fig = px.bar(x=repo_links, y=stars, title=title, labels=labels,
              hover_name=hover_texts)
